@@ -3,18 +3,21 @@ import { ObjectionModule } from '@willsoto/nestjs-objection';
 import { Addon } from './models/addon.model';
 import { AddonCategory } from './models/addoncategory.model';
 import { Brand } from './models/brand.model';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     ConfigModule,
-    ObjectionModule.register({
-      config: {
-        client: 'sqlite3',
-        useNullAsDefault: true,
-        connection: {
-          filename: 'prod.sqlite3',
-        },
+    ObjectionModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => {
+        return {
+          config: {
+            client: 'pg',
+            connection: config.get('DB_URI'),
+          },
+        };
       },
     }),
     ObjectionModule.forFeature([Addon, AddonCategory, Brand]),

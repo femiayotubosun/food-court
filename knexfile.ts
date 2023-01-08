@@ -1,4 +1,6 @@
 import type { Knex } from 'knex';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: __dirname + '/.env.stage.prod' });
 
 // Update with your config settings.
 
@@ -18,10 +20,8 @@ const config: { [key: string]: Knex.Config } = {
     },
   },
   production: {
-    client: 'sqlite3',
-    connection: {
-      filename: './prod.sqlite3',
-    },
+    client: 'pg',
+    connection: process.env.DB_URI,
     migrations: {
       directory: './src/database/migrations',
       stub: './src/database/migration.stub',
