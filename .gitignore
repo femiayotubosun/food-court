@@ -1,5 +1,6 @@
 # sqlite3
 dev.sqlite3
+prod.sqlite3
 
 # compiled output
 /dist

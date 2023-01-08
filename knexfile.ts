@@ -17,36 +17,18 @@ const config: { [key: string]: Knex.Config } = {
       stub: './src/database/seed.stub',
     },
   },
-
-  staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user: 'username',
-      password: 'password',
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: 'knex_migrations',
-    },
-  },
-
   production: {
-    client: 'postgresql',
+    client: 'sqlite3',
     connection: {
-      database: 'my_db',
-      user: 'username',
-      password: 'password',
-    },
-    pool: {
-      min: 2,
-      max: 10,
+      filename: './prod.sqlite3',
     },
     migrations: {
-      tableName: 'knex_migrations',
+      directory: './src/database/migrations',
+      stub: './src/database/migration.stub',
+    },
+    seeds: {
+      directory: './src/database/seeds',
+      stub: './src/database/seed.stub',
     },
   },
 };

@@ -13,7 +13,7 @@ import { ConfigModule } from '@nestjs/config';
         client: 'sqlite3',
         useNullAsDefault: true,
         connection: {
-          filename: 'dev.sqlite3',
+          filename: 'prod.sqlite3',
         },
       },
     }),
