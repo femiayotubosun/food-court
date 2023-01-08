@@ -11,7 +11,6 @@ import { User } from 'src/database/models/user.model';
 @Injectable()
 export class AuthService {
   constructor(
-    // @InjectRepository(UsersRepository)
     private userRepository: UserRepository,
     private jwtService: JwtService,
   ) {}

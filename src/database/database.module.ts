@@ -1,8 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ObjectionModule } from '@willsoto/nestjs-objection';
+import { Addon } from './models/addon.model';
+import { AddonCategory } from './models/addoncategory.model';
+import { Brand } from './models/brand.model';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     ObjectionModule.register({
       config: {
         client: 'sqlite3',
@@ -12,6 +17,7 @@ import { ObjectionModule } from '@willsoto/nestjs-objection';
         },
       },
     }),
+    ObjectionModule.forFeature([Addon, AddonCategory, Brand]),
   ],
   exports: [ObjectionModule],
 })

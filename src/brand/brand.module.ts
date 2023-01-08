@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { BrandController } from './brand.controller';
 import { BrandRepository } from './brand.repository';
-import { Brand } from 'src/database/models/brand.model';
-import { ObjectionModule } from '@willsoto/nestjs-objection';
+import { DatabaseModule } from '../database/database.module';
+import { AuthModule } from '../auth/auth.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [ObjectionModule.forFeature([Brand])],
+  imports: [DatabaseModule, AuthModule, UserModule],
   controllers: [BrandController],
   providers: [BrandRepository, BrandService],
   exports: [BrandModule, BrandRepository],

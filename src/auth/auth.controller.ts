@@ -20,7 +20,7 @@ export class AuthController {
 
   @Post('/signup/admin')
   async signUpAsAdmin(@Body() dto: SignupCredentialsDto): Promise<any> {
-    return await this.authService.signUp(dto);
+    return await this.authService.signUpAsAdmin(dto);
   }
 
   @Post('/signin')

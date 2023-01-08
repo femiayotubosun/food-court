@@ -1,13 +1,9 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { UsersRepository } from '../users.repository';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(
-    private reflector: Reflector,
-    private userRepository: UsersRepository,
-  ) {}
+  constructor(private reflector: Reflector) {}
 
   matchRoles(roles: string[] | string, role: string) {
     if (roles.includes(role) || roles === role) {
@@ -18,6 +14,7 @@ export class RolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    console.log(roles);
     if (!roles) {
       return true;
     }

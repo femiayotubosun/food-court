@@ -8,7 +8,7 @@ export class UserRepository {
   constructor(@Inject(User) private readonly user: typeof User) {}
 
   async createUser(dto: CreateUserDto): Promise<User> {
-    const user = await this.user.query().insert(dto).insert(dto);
+    const user = await this.user.query().insert(dto);
     return await this.findUserById(user.id);
   }
 
@@ -17,7 +17,7 @@ export class UserRepository {
   }
 
   async findUserByEmail(email: string): Promise<User> {
-    return await this.user.query().select('id', 'email').findOne({
+    return await this.user.query().findOne({
       email,
     });
   }

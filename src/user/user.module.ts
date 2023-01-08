@@ -7,6 +7,6 @@ import { User } from 'src/database/models/user.model';
 @Module({
   imports: [ObjectionModule.forFeature([User])],
   providers: [UserService, UserRepository],
-  exports: [UserModule],
+  exports: [UserModule, UserRepository],
 })
 export class UserModule {}
