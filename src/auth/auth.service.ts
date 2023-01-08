@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserRepository } from 'src/user/user.repository';
 import * as bcrypt from 'bcrypt';
 import { LoginCredentialsDto } from './dto/login-credentials.dto';
@@ -16,6 +20,11 @@ export class AuthService {
   ) {}
 
   async signUp(dto: SignupCredentialsDto): Promise<User> {
+    const user = await this.userRepository.findUserByEmail(dto.email);
+
+    if (user) {
+      throw new ConflictException('User with this email already exists');
+    }
     return await this.userRepository.createUser({
       ...dto,
       role: UserRole.USER,
@@ -23,6 +32,11 @@ export class AuthService {
   }
 
   async signUpAsAdmin(dto: SignupCredentialsDto): Promise<User> {
+    const user = await this.userRepository.findUserByEmail(dto.email);
+
+    if (user) {
+      throw new ConflictException('User with this email already exists');
+    }
     return await this.userRepository.createUser({
       ...dto,
       role: UserRole.ADMIN,
