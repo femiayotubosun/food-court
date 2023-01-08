@@ -10,7 +10,7 @@ import { configValidationSchema } from './config.schema';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.stage.dev'],
+      envFilePath: ['.env.stage.prod'],
       validationSchema: configValidationSchema,
     }),
     DatabaseModule,

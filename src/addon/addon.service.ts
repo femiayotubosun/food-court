@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAddonDto } from './dto/create-addon.dto';
 import { UpdateAddonDto } from './dto/update-addon.dto';
 import { BrandRepository } from '../brand/brand.repository';
 import { AddonRepository } from './addon.repository';
 import { Addon } from '../database/models/addon.model';
 import { AddonCategoryRepository } from './addoncategory.repository';
-import {
-  ResourceAlreadyExistsException,
-  ResourceNotFoundException,
-} from 'src/common/exceptions';
 import { CreateAddonCategoryDto } from './dto/create-addon-category.dto';
 
 @Injectable()
@@ -22,9 +22,7 @@ export class AddonService {
   private async findBrandById(brandId: number) {
     const brand = await this.brandRepository.findBrandById(brandId);
     if (!brand) {
-      throw new ResourceNotFoundException(
-        `Brand with id '${brandId}' was not found`,
-      );
+      throw new NotFoundException(`Brand with id '${brandId}' was not found`);
     }
   }
 
@@ -36,7 +34,7 @@ export class AddonService {
     );
 
     if (!category) {
-      throw new ResourceNotFoundException(
+      throw new NotFoundException(
         `Addon Category with name '${dto.category}' was not found.`,
       );
     }
@@ -44,7 +42,7 @@ export class AddonService {
     const addon = await this.addonRepository.findAddonByName(dto.name);
 
     if (addon) {
-      throw new ResourceAlreadyExistsException(
+      throw new ConflictException(
         `Addon with name '${dto.name}' already exists.`,
       );
     }
@@ -61,9 +59,7 @@ export class AddonService {
     await this.findBrandById(brandId);
     const addon = await this.addonRepository.findAddonById(id);
     if (!addon) {
-      throw new ResourceNotFoundException(
-        `Addon with id '${id}' was not found`,
-      );
+      throw new NotFoundException(`Addon with id '${id}' was not found`);
     }
     return addon;
   }
@@ -72,9 +68,7 @@ export class AddonService {
     await this.findBrandById(brandId);
     const addon = await this.addonRepository.findAddonByName(name);
     if (!addon) {
-      throw new ResourceNotFoundException(
-        `Addon with name '${name}' was not found`,
-      );
+      throw new NotFoundException(`Addon with name '${name}' was not found`);
     }
     return addon;
   }
@@ -90,7 +84,7 @@ export class AddonService {
     if (dto.name) {
       const addon = await this.addonRepository.findAddonByName(dto.name);
       if (addon) {
-        throw new ResourceAlreadyExistsException(
+        throw new ConflictException(
           `Addon with name '${addon.name}' already exists`,
         );
       }
@@ -114,7 +108,7 @@ export class AddonService {
     );
 
     if (category) {
-      throw new ResourceAlreadyExistsException(
+      throw new ConflictException(
         `Addon Category with name '${dto.name}' already exists`,
       );
     }

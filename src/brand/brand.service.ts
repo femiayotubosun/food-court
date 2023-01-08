@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { BrandRepository } from './brand.repository';
-import { ResourceAlreadyExistsException } from '../common/exceptions/resource-exists.exception';
-import { ResourceNotFoundException } from '../common/exceptions/not-found.exception';
+import {
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common/exceptions';
 
 @Injectable()
 export class BrandService {
@@ -11,7 +13,7 @@ export class BrandService {
   async createBrand(dto: CreateBrandDto) {
     const brand = await this.brandRepository.findBrandByName(dto.name);
     if (brand) {
-      throw new ResourceAlreadyExistsException(
+      throw new ConflictException(
         `Brand with name '${dto.name}' already exists`,
       );
     }
@@ -30,7 +32,7 @@ export class BrandService {
   async updateBrand(id: number, dto: CreateBrandDto) {
     const brand = await this.brandRepository.findBrandByName(dto.name);
     if (brand) {
-      throw new ResourceAlreadyExistsException(
+      throw new ConflictException(
         `Brand with name '${dto.name}' already exists`,
       );
     }
@@ -41,9 +43,7 @@ export class BrandService {
   async removeBrand(id: number) {
     const brand = await this.brandRepository.findBrandById(id);
     if (!brand) {
-      throw new ResourceNotFoundException(
-        `Brand with id '${id}' was not found'`,
-      );
+      throw new NotFoundException(`Brand with id '${id}' was not found'`);
     }
     return await this.brandRepository.deleteBrand(id);
   }

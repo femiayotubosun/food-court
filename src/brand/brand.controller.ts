@@ -8,10 +8,10 @@ import {
   Delete,
   HttpCode,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
-import { ResourceNotFoundException } from '../common/exceptions/not-found.exception';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -41,9 +41,7 @@ export class BrandController {
   async findOne(@Param('id') id: string) {
     const brand = await this.brandService.findBrandById(+id);
     if (!brand) {
-      throw new ResourceNotFoundException(
-        `Brand with id '${id}' was not found`,
-      );
+      throw new NotFoundException(`Brand with id '${id}' was not found`);
     }
     return brand;
   }
