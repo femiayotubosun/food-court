@@ -29,14 +29,17 @@ export class AddonService {
   async createAddon(brandId: number, dto: CreateAddonDto) {
     await this.findBrandById(brandId);
 
-    const category = await this.addonCategoryRepository.findAddonCategoryByName(
-      dto.category,
-    );
+    if (dto.category) {
+      const category =
+        await this.addonCategoryRepository.findAddonCategoryByName(
+          dto.category,
+        );
 
-    if (!category) {
-      throw new NotFoundException(
-        `Addon Category with name '${dto.category}' was not found.`,
-      );
+      if (!category) {
+        throw new NotFoundException(
+          `Addon Category with name '${dto.category}' was not found.`,
+        );
+      }
     }
 
     const addon = await this.addonRepository.findAddonByName(dto.name);
