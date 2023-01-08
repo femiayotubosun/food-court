@@ -8,21 +8,22 @@ export class BrandRepository {
   constructor(@Inject(Brand) private readonly brand: typeof Brand) {}
 
   async createBrand(dto: CreateBrandDto): Promise<Brand> {
-    return await this.brand.query().insert(dto);
+    const brand = await this.brand.query().insert(dto);
+    return await this.findBrandById(brand.id);
   }
 
   async findBrandById(id: number) {
-    return await this.brand.query().findById(id);
+    return await this.brand.query().select('id', 'name').findById(id);
   }
 
   async findBrandByName(name: string) {
-    return await this.brand.query().findOne({
+    return await this.brand.query().select('id', 'name').findOne({
       name,
     });
   }
 
   async findBrands() {
-    return await this.brand.query();
+    return await this.brand.query().select('id', 'name');
   }
 
   async deleteBrand(id: number): Promise<boolean> {

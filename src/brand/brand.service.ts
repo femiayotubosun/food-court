@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { BrandRepository } from './brand.repository';
 import { ResourceAlreadyExistsException } from '../common/exceptions/resource-exists.exception';
-import { NotFoundException } from '../common/exceptions/not-found.exception';
+import { ResourceNotFoundException } from '../common/exceptions/not-found.exception';
 
 @Injectable()
 export class BrandService {
@@ -23,7 +23,8 @@ export class BrandService {
   }
 
   async findBrandById(id: number) {
-    return await this.brandRepository.findBrandById(id);
+    const brand = await this.brandRepository.findBrandById(id);
+    return brand;
   }
 
   async updateBrand(id: number, dto: CreateBrandDto) {
@@ -40,7 +41,9 @@ export class BrandService {
   async removeBrand(id: number) {
     const brand = await this.brandRepository.findBrandById(id);
     if (!brand) {
-      throw new NotFoundException(`Brand with id '${id}' was not found'`);
+      throw new ResourceNotFoundException(
+        `Brand with id '${id}' was not found'`,
+      );
     }
     return await this.brandRepository.deleteBrand(id);
   }

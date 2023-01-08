@@ -8,6 +8,14 @@ const config: { [key: string]: Knex.Config } = {
     connection: {
       filename: './dev.sqlite3',
     },
+    migrations: {
+      directory: './src/database/migrations',
+      stub: './src/database/migration.stub',
+    },
+    seeds: {
+      directory: './src/database/seeds',
+      stub: './src/database/seed.stub',
+    },
   },
 
   staging: {

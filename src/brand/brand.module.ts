@@ -9,5 +9,6 @@ import { ObjectionModule } from '@willsoto/nestjs-objection';
   imports: [ObjectionModule.forFeature([Brand])],
   controllers: [BrandController],
   providers: [BrandRepository, BrandService],
+  exports: [BrandModule, BrandRepository],
 })
 export class BrandModule {}

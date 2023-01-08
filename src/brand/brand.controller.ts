@@ -6,11 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
-import { UpdateBrandDto } from './dto/update-brand.dto';
-import { NotFoundException } from '../common/exceptions/not-found.exception';
+import { ResourceNotFoundException } from '../common/exceptions/not-found.exception';
 
 @Controller('brands')
 export class BrandController {
@@ -31,7 +31,9 @@ export class BrandController {
   async findOne(@Param('id') id: string) {
     const brand = await this.brandService.findBrandById(+id);
     if (!brand) {
-      throw new NotFoundException(`Brand with id '${id}' was not found`);
+      throw new ResourceNotFoundException(
+        `Brand with id '${id}' was not found`,
+      );
     }
     return brand;
   }
@@ -54,6 +56,7 @@ export class BrandController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   async remove(@Param('id') id: string) {
     await this.brandService.removeBrand(+id);
   }
