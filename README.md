@@ -44,8 +44,8 @@ $ npm install
 ## Running the app
 
 
-Edit .env.dev
-with
+Add .env.stage.dev or .env.stage.prod
+with the following values
 
 JWT_SECRET=
 DB_URI=

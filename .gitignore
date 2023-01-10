@@ -40,3 +40,4 @@ lerna-debug.log*
 
 # Environment variable
 .env.stage.prod
+.env.stage.dev
