@@ -44,13 +44,15 @@ $ npm install
 ## Running the app
 
 
-Add .env.stage.dev or .env.stage.prod
+Add .env.stage.prod
 with the following values
 
+```bash
 JWT_SECRET=
 DB_URI=
 STAGE=dev
 NODE_ENV=development
+```
 
 ```bash
 # development
