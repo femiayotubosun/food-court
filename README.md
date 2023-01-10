@@ -33,6 +33,8 @@ brand. The request body should contain the following field:
 
 - <a href="https://elements.getpostman.com/redirect?entityId=23283058-67dee409-f621-4100-b710-ea7aaa3bc1dd&entityType=collection"> Postman Docs</a>
 
+
+
 ## Installation
 
 ```bash
@@ -40,6 +42,15 @@ $ npm install
 ```
 
 ## Running the app
+
+
+Edit .env.dev
+with
+
+JWT_SECRET=
+DB_URI=
+STAGE=dev
+NODE_ENV=development
 
 ```bash
 # development
